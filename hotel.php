@@ -11,7 +11,7 @@ if(!isset($_SESSION['admin'])){
         $r = $conn->query($sql);
         if($r){
             $_SESSION['h_delete_success'] = "Hotel Deleted Successfully";
-            header("location: manager.php");
+            header("location: hotel.php");
             die();
         }else{
             $_SESSION['h_delete_error'] = "Unable to delete Hotel";
