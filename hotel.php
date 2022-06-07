@@ -68,13 +68,78 @@ if(!isset($_SESSION['admin'])){
                                             ?>
                                             <tr>
                                                 <td><?php echo $row['id'];?></td>
-                                                <td>
-                                                    <img src="https://apis.raklissd.com/data/images/manager_avatars/<?php echo $row['avatar'];?>" alt="avatar not uploaded" width="100" height="100" style="border-radius:50%;">
-                                                    <span class="ml-3"><?php echo $row['full_name'];?></span>
+                                                <td class="text-center">
+                                                    <?php 
+                                                    $sqll = "select * from managers";
+                                                    $rr = $conn->query($sqll);
+                                                    while($roww = mysqli_fetch_assoc($rr)){
+                                                    ?>
+                                                    <img src="https://apis.raklissd.com/data/images/manager_avatars/<?php echo $roww['avatar'];?>" alt="avatar not uploaded" width="75" height="75" style="border-radius:50%;">
+                                                    <p class="mb-0 pb-0"><?php echo $roww['full_name'];?></p>
+                                                    <p class="mt-0 pt-0"><?php echo $roww['Email'];?></p>
+                                                    <?php }?>
                                                 </td>
-                                                <td><?php echo $row['Email'];?></td>
-                                                <td><?php echo $row['phone'];?></td>
-                                                <td><?php echo $row['password'];?></td>
+                                                <td><?php echo $row['name'];?></td>
+                                                <td><?php echo $row['description'];?></td>
+                                                <td>
+                                                    <p class="m-0 p-0"> Flat Screen
+                                                        <?php if($row['flat_screen'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> City View
+                                                        <?php if($row['city_view'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Bathtub
+                                                        <?php if($row['bathtub'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Free Wifi
+                                                        <?php if($row['free_wifi'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Gym
+                                                        <?php if($row['gym'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Breakfast
+                                                        <?php if($row['breakfast'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Kitchenette
+                                                        <?php if($row['kitchenette'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                    <p class="m-0 p-0"> Beach View
+                                                        <?php if($row['beach_view'] == 1){?>
+                                                        <span><i class="material-icons text-success">done</i></span>
+                                                        <?php }else{?>
+                                                        <span><i class="material-icons text-danger">close</i></span>
+                                                        <?php }?>
+                                                    </p>
+                                                </td>
+                                                <td><?php echo $row['created_at'];?></td>
                                                 <td><?php echo $row['created_at'];?></td>
                                                 <td>
                                                     <a href="?deletehotel=<?php echo $row['id'];?>" onclick="alert('Are You Sure?')">
