@@ -1,4 +1,9 @@
-<?php include "includes/header.php";?>
+<?php include "includes/header.php";
+if(!isset($_SESSION['admin'])){
+    header("location:login.php");
+    die();
+}
+?>
 <div class="wrapper ">
     <?php include "includes/sidenav.php";?>
     <div class="main-panel">
