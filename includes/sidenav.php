@@ -24,7 +24,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="hotel.php">
               <i class="material-icons">content_paste</i>
               <p>Hotels</p>
             </a>

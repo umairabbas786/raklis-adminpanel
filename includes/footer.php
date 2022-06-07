@@ -1,10 +1,10 @@
-<footer class="footer">
+<footer class="footer fixed-bottom">
         <div class="container-fluid">
-          <div class="copyright float-right">
+          <div class="float-right mr-5">
             &copy;
             <script>
               document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
+            </script>, made with <i class="material-icons" style="font-size:16px;">favorite</i> by
             <a href="https://umairabbas.me" target="_blank">Umair Abbas</a>.
           </div>
         </div>
