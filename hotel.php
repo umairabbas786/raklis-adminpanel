@@ -7,14 +7,14 @@ if(!isset($_SESSION['admin'])){
 <?php 
     if(isset($_GET['deletehotel'])){
         $id = $_GET['deletehotel'];
-        $sql = "delete from managers where id = '$id'";
+        $sql = "delete from hotels where id = '$id'";
         $r = $conn->query($sql);
         if($r){
-            $_SESSION['h_delete_success'] = "Manager Deleted Successfully";
+            $_SESSION['h_delete_success'] = "Hotel Deleted Successfully";
             header("location: manager.php");
             die();
         }else{
-            $_SESSION['h_delete_error'] = "Unable to delete Manager";
+            $_SESSION['h_delete_error'] = "Unable to delete Hotel";
         }
     }
 ?>
