@@ -18,9 +18,15 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="manager.php">
               <i class="material-icons">content_paste</i>
               <p>Managers</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="">
+              <i class="material-icons">content_paste</i>
+              <p>Hotels</p>
             </a>
           </li>
           <li class="nav-item ">
