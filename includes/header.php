@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 session_start();
-include "include/conn.php";
+include "includes/conn.php";
 ?>
 
 <!DOCTYPE html>
