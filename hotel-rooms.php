@@ -5,17 +5,10 @@ if(!isset($_SESSION['admin'])){
 }
 ?>
 <?php 
-    if(isset($_GET['deletehotel'])){
-        $id = $_GET['deletehotel'];
-        $sql = "delete from hotels where id = '$id'";
-        $r = $conn->query($sql);
-        if($r){
-            $_SESSION['h_delete_success'] = "Hotel Deleted Successfully";
-            header("location: hotel.php");
-            die();
-        }else{
-            $_SESSION['h_delete_error'] = "Unable to delete Hotel";
-        }
+    if(isset($_GET['hoteluid'])){
+        $uid = $_GET['hoteluid'];
+    }else{
+        header("location:hotel.php");
     }
 ?>
 <div class="wrapper ">
@@ -24,65 +17,43 @@ if(!isset($_SESSION['admin'])){
         <?php include "includes/nav.php";?>
         <div class="content">
             <div class="container-fluid">
-            <?php if(isset($_SESSION['h_delete_success'])){?>
-                <div class="alert alert-success" role="alert">
-                    <?php echo $_SESSION['h_delete_success'];?>
-                </div>
-            <?php }unset($_SESSION['h_delete_success']);?>
-            <?php if(isset($_SESSION['h_delete_error'])){?>
-                <div class="alert alert-danger" role="alert">
-                    <?php echo $_SESSION['h_delete_error'];?>
-                </div>
-            <?php }unset($_SESSION['h_delete_error']);?>
-            <?php if(isset($_SESSION['h_add_success'])){?>
-                <div class="alert alert-success" role="alert">
-                    <?php echo $_SESSION['h_add_success'];?>
-                </div>
-            <?php }unset($_SESSION['h_add_success']);?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title ">Hotels</h4>
-                                <p class="card-category"> Manage Hotels here</p>
-                                <div class="float-right"><a href="add-hotel.php" class="btn btn-block btn-secondary">Add Hotel</a></div>
+                                <h4 class="card-title "><?php echo $_GET['hotelname'];?> Rooms</h4>
+                                <p class="card-category"> View Hotel Room Details here</p>
+                                <a href="hotel.php" class="btn btn-info float-right">Back to hotels</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table"  cellspacing="0" width="100%" style="width:100%;white-space: nowrap;">
                                         <thead class=" text-primary">
                                             <th>ID</th>
-                                            <th>Manager Details</th>
-                                            <th>Hotel Name</th>
-                                            <th>Hotel Description</th>
-                                            <th>Hotel Features</th>
-                                            <th>Hotel Images</th>
-                                            <th>Hotel Rooms</th>
+                                            <th>Room Images</th>
+                                            <th>Room Name</th>
+                                            <th>Room Price</th>
+                                            <th>Room Size</th>
+                                            <th>Bed Type</th>
+                                            <th>Room Information</th>
+                                            <th>Room Features</th>
+                                            <th>Status</th>
                                             <th>Created_at</th>
-                                            <th>Action</th>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $sql = "select * from hotels";
+                                                $sql = "select * from hotel_rooms where hotel_uid = '$uid'";
                                                 $r = $conn->query($sql);
                                                 while($row = mysqli_fetch_assoc($r)){
                                             ?>
                                             <tr>
                                                 <td><?php echo $row['id'];?></td>
-                                                <td class="text-center">
-                                                    <?php 
-                                                    $muid = $row['manager_uid'];
-                                                    $sqll = "select * from managers where uid = '$muid'";
-                                                    $rr = $conn->query($sqll);
-                                                    while($roww = mysqli_fetch_assoc($rr)){
-                                                    ?>
-                                                    <img src="https://apis.raklissd.com/data/images/manager_avatars/<?php echo $roww['avatar'];?>" alt="avatar not uploaded" width="75" height="75" style="border-radius:50%;">
-                                                    <p class="mb-0 pb-0"><?php echo $roww['full_name'];?></p>
-                                                    <p class="mt-0 pt-0"><?php echo $roww['Email'];?></p>
-                                                    <?php }?>
-                                                </td>
+                                                <td>Images</td>
                                                 <td><?php echo $row['name'];?></td>
-                                                <td><?php echo $row['description'];?></td>
+                                                <td><?php echo $row['price'];?></td>
+                                                <td><?php echo $row['room_size'];?></td>
+                                                <td><?php echo $row['bed_type'];?></td>
+                                                <td><?php echo $row['added_info'];?></td>
                                                 <td>
                                                     <p class="m-0 p-0"> Flat Screen
                                                         <?php if($row['flat_screen'] == 1){?>
@@ -141,16 +112,8 @@ if(!isset($_SESSION['admin'])){
                                                         <?php }?>
                                                     </p>
                                                 </td>
+                                                <td><?php echo $row['state'];?></td>
                                                 <td><?php echo $row['created_at'];?></td>
-                                                <td><a href="hotel-rooms.php?hoteluid=<?php echo $row['uid'];?>&&hotelname=<?php echo $row['name'];?>"><button class="btn btn-block btn-primary">View Hotel Rooms</button></a></td>
-                                                <td><?php echo $row['created_at'];?></td>
-                                                <td>
-                                                    <a href="?deletehotel=<?php echo $row['id'];?>" onclick="alert('Are You Sure?')">
-                                                    <button type="button" data-toggle="tooltip" class="btn btn-danger btn-round" data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    </button>
-                                                    </a>
-                                                </td>
                                             </tr>
                                             <?php }?>
                                         </tbody>
