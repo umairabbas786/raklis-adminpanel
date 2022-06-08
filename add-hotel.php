@@ -58,7 +58,7 @@ if(!isset($_SESSION['admin'])){
         //Make sure we have a file path
         if ($tmpFilePath != ""){
             //Setup our new file path
-            $newFilePath = "./assets/img/demo/" . $_FILES['upload']['name'][$i];
+            $newFilePath = "../apis.raklissd.com/data/images/hotel_room_images/" . $_FILES['upload']['name'][$i];
 
             //Upload the file into the temp dir
             if(move_uploaded_file($tmpFilePath, $newFilePath)) {
