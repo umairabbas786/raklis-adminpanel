@@ -45,24 +45,25 @@ if(!isset($_SESSION['admin'])){
             $beach_view = $_POST['beach_view'];
         }
         $images = json_encode($_FILES['upload']['name']);
+        $flag=0;
         if (!empty(array_filter($_FILES['upload']['name']))) {
-        // Count # of uploaded files in array
         $total = count($_FILES['upload']['name']);
 
-        // Loop through each file
         for( $i=0 ; $i < $total ; $i++ ) {
-
-        //Get the temp file path
         $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
-
-        //Make sure we have a file path
         if ($tmpFilePath != ""){
-            //Setup our new file path
             $newFilePath = "../apis.raklissd.com/data/images/hotel_room_images/" . $_FILES['upload']['name'][$i];
 
             //Upload the file into the temp dir
             if(move_uploaded_file($tmpFilePath, $newFilePath)) {
-                $sql = "insert into hotels(uid,manager_uid,name,lat,lng,description,flat_screen,city_view,bathtub,free_wifi,gym,breakfast,kitchenette,beach_view,images,created_at,updated_at)
+                $flag = 1;
+
+            }
+        }
+        }
+        }
+        if($flag == 1){
+            $sql = "insert into hotels(uid,manager_uid,name,lat,lng,description,flat_screen,city_view,bathtub,free_wifi,gym,breakfast,kitchenette,beach_view,images,created_at,updated_at)
                 values ('$uid','$manager','$name','$latitude','$longitude','$description','$flat_screen','$city_view','$bathtub','$free_wifi','$gym','$breakfast','$kitchenette','$beach_view','$images',now(),now())";
                 $r = $conn->query($sql);
                 if($r){
@@ -72,12 +73,8 @@ if(!isset($_SESSION['admin'])){
                 }else{
                     $_SESSION['h_add_error'] = "Unable to add Hotel";
                 }
-
-            }else{
-                $ok = 0;
-            }
-        }
-        }
+        }else{
+            $_SESSION['h_add_error'] = "Unable to add Hotel";
         }
     }
 ?>
