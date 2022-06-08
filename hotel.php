@@ -70,7 +70,8 @@ if(!isset($_SESSION['admin'])){
                                                 <td><?php echo $row['id'];?></td>
                                                 <td class="text-center">
                                                     <?php 
-                                                    $sqll = "select * from managers";
+                                                    $muid = $row['manager_uid'];
+                                                    $sqll = "select * from managers where uid = '$muid'";
                                                     $rr = $conn->query($sqll);
                                                     while($roww = mysqli_fetch_assoc($rr)){
                                                     ?>

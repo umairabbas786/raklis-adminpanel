@@ -44,29 +44,70 @@ if(!isset($_SESSION['admin'])){
         if(isset($_POST['beach_view'])){
             $beach_view = $_POST['beach_view'];
         }
-        $sql = "insert into hotels(uid,manager_uid,name,lat,lng,description,flat_screen,city_view,bathtub,free_wifi,gym,breakfast,kitchenette,beach_view,created_at,updated_at)
-        values ('$uid','$manager','$name','$latitude','$longitude','$description','$flat_screen','$city_view','$bathtub','$free_wifi','$gym','$breakfast','$kitchenette','$beach_view',now(),now())";
-        $r = $conn->query($sql);
-        if($r){
-            $_SESSION['h_add_success'] = "Hotel Added Successfully";
-            header("location: hotel.php");
-            die();
-        }else{
-            $_SESSION['h_add_error'] = "Unable to Add Hotel";
+        $images = json_encode($_FILES['upload']['name']);
+        if (!empty(array_filter($_FILES['upload']['name']))) {
+        // Count # of uploaded files in array
+        $total = count($_FILES['upload']['name']);
+
+        // Loop through each file
+        for( $i=0 ; $i < $total ; $i++ ) {
+
+        //Get the temp file path
+        $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
+
+        //Make sure we have a file path
+        if ($tmpFilePath != ""){
+            //Setup our new file path
+            $newFilePath = "./assets/img/demo/" . $_FILES['upload']['name'][$i];
+
+            //Upload the file into the temp dir
+            if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $sql = "insert into hotels(uid,manager_uid,name,lat,lng,description,flat_screen,city_view,bathtub,free_wifi,gym,breakfast,kitchenette,beach_view,images,created_at,updated_at)
+                values ('$uid','$manager','$name','$latitude','$longitude','$description','$flat_screen','$city_view','$bathtub','$free_wifi','$gym','$breakfast','$kitchenette','$beach_view','$images',now(),now())";
+                $r = $conn->query($sql);
+                if($r){
+                    $_SESSION['h_add_success'] = "Hotel Added Successfully";
+                    header("location: hotel.php");
+                    die();
+                }else{
+                    $_SESSION['h_add_error'] = "Unable to add Hotel";
+                }
+
+            }else{
+                $ok = 0;
+            }
+        }
+        }
         }
     }
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<style>
+    /* input[type="file"] {
+  display: block;
+} */
+    .imageThumb {
+        max-height: 100px;
+        max-width: 100px;
+        padding: 1px;
+    }
+
+    .pip {
+        display: inline-block;
+        margin: 10px 10px 0 0;
+    }
+</style>
 <div class="wrapper ">
     <?php include "includes/sidenav.php";?>
     <div class="main-panel">
         <?php include "includes/nav.php";?>
         <div class="content">
             <div class="container-fluid">
-            <?php if(isset($_SESSION['h_add_error'])){?>
+                <?php if(isset($_SESSION['h_add_error'])){?>
                 <div class="alert alert-success" role="alert">
                     <?php echo $_SESSION['h_add_error'];?>
                 </div>
-            <?php }unset($_SESSION['h_add_error']);?>
+                <?php }unset($_SESSION['h_add_error']);?>
                 <div class="row" style="font-size:28px;">
                     <div class="col-md-12">
                         <div class="card">
@@ -127,30 +168,36 @@ if(!isset($_SESSION['admin'])){
                                     <div class="row mt-2 mb-2">
                                         <div class="col-md-12">
                                             <label class="bmd-label-floating">Hotel Features</label><br>
-                                            <input type="checkbox" name="flat_screen" value="1" unchecked>
+                                            <input type="checkbox" id="flat_screen" name="flat_screen" value="1"
+                                                unchecked>
                                             <label for="flat_screen" class="mr-3">Flat Screen</label>
-                                            <input type="checkbox" name="city_view" value="1" unchecked>
+                                            <input type="checkbox" id="city_view" name="city_view" value="1" unchecked>
                                             <label for="city_view" class="mr-3">City View</label>
-                                            <input type="checkbox" name="bathtub" value="1" unchecked>
+                                            <input type="checkbox" id="bathtub" name="bathtub" value="1" unchecked>
                                             <label for="bathtub" class="mr-3">BathTub</label>
-                                            <input type="checkbox" name="free_wifi" value="1" unchecked>
+                                            <input type="checkbox" id="free_wifi" name="free_wifi" value="1" unchecked>
                                             <label for="free_wifi" class="mr-3">Free Wifi</label>
-                                            <input type="checkbox" name="gym" value="1" unchecked>
+                                            <input type="checkbox" id="gym" name="gym" value="1" unchecked>
                                             <label for="gym" class="mr-3">Gym</label>
-                                            <input type="checkbox" name="breakfast" value="1" unchecked>
+                                            <input type="checkbox" id="breakfast" name="breakfast" value="1" unchecked>
                                             <label for="breakfast" class="mr-3">Breakfast</label>
-                                            <input type="checkbox" name="kitchenette" value="1" unchecked>
+                                            <input type="checkbox" id="kitchenette" name="kitchenette" value="1"
+                                                unchecked>
                                             <label for="kitchenette" class="mr-3">Kitchenette</label>
-                                            <input type="checkbox" name="beach_view" value="1" unchecked>
+                                            <input type="checkbox" input="beach_view" name="beach_view" value="1"
+                                                unchecked>
                                             <label for="beach_view" class="mr-3">Beach View</label>
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-2">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Images Section</label>
-                                                <input type="text" class="form-control" name="account_holder_name"
-                                                    >
+                                            <div class="picture-container">
+                                                <div class="picture">
+                                                    <label class="bmd-label-floating">Upload Hotel Images</label>
+                                                    <input type="file"
+                                                        accept="image/png, image/jpg, image/gif, image/jpeg"
+                                                        class="form-control" id="files" name="upload[]" multiple />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -165,3 +212,39 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <?php include "includes/footer.php";?>
+        <script>
+            $(document).ready(function () {
+                if (window.File && window.FileList && window.FileReader) {
+                    $("#files").on("change", function (e) {
+                        var files = e.target.files,
+                            filesLength = files.length;
+                        for (var i = 0; i < filesLength; i++) {
+                            var f = files[i]
+                            var fileReader = new FileReader();
+                            fileReader.onload = (function (e) {
+                                var file = e.target;
+                                $("<span class=\"pip\">" +
+                                    "<img class=\"imageThumb\" src=\"" + e.target.result +
+                                    "\" title=\"" + file.name + "\"/>").insertAfter(
+                                    "#files");
+                                $(".remove").click(function () {
+                                    $(this).parent(".pip").remove();
+                                });
+
+                                // Old code here
+                                /*$("<img></img>", {
+                                  class: "imageThumb",
+                                  src: e.target.result,
+                                  title: file.name + " | Click to remove"
+                                }).insertAfter("#files").click(function(){$(this).remove();});*/
+
+                            });
+                            fileReader.readAsDataURL(f);
+                        }
+                        console.log(files);
+                    });
+                } else {
+                    alert("Your browser doesn't support to File API")
+                }
+            });
+        </script>
