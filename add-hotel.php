@@ -52,7 +52,7 @@ if(!isset($_SESSION['admin'])){
         for( $i=0 ; $i < $total ; $i++ ) {
         $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
         if ($tmpFilePath != ""){
-            $newFilePath = "../apis.raklissd.com/data/images/hotel_room_images/" . $_FILES['upload']['name'][$i];
+            $newFilePath = "../apis.raklissd.com/data/images/hotel_images/" . $_FILES['upload']['name'][$i];
 
             //Upload the file into the temp dir
             if(move_uploaded_file($tmpFilePath, $newFilePath)) {

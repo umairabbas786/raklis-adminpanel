@@ -12,7 +12,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="user.php">
               <i class="material-icons">person</i>
               <p>Users</p>
             </a>
