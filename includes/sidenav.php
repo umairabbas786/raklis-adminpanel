@@ -36,23 +36,23 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="review.php">
               <i class="material-icons">bubble_chart</i>
               <p>Reviews</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="chat.php">
               <i class="material-icons">location_ons</i>
               <p>Chats</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a class="nav-link" href="">
               <i class="material-icons">notifications</i>
               <p>Notifications</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item ">
             <a class="nav-link" href="logout.php">
               <i class="material-icons">language</i>
